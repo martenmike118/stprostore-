@@ -942,10 +942,10 @@
     <div class="section-title">Our Services <span>// select a category</span></div>
   </div>
   <div class="cat-tabs">
-    <button class="cat-tab active" onclick="showCat('software-activation', this)">💻 Software Activation</button>
-    <button class="cat-tab" onclick="showCat('service-programming', this)">🔧 Service Programming</button>
-    <button class="cat-tab" onclick="showCat('workshop-repair', this)">🏭 Workshop Repair System</button>
-    <button class="cat-tab" onclick="showCat('tools', this)">🛠️ Tools</button>
+    <button class="cat-tab active" onclick="showCat(&quot;software-activation&quot;, this)">💻 Software Activation</button>
+    <button class="cat-tab" onclick="showCat(&quot;service-programming&quot;, this)">🔧 Service Programming</button>
+    <button class="cat-tab" onclick="showCat(&quot;workshop-repair&quot;, this)">🏭 Workshop Repair System</button>
+    <button class="cat-tab" onclick="showCat(&quot;tools&quot;, this)">🛠️ Tools</button>
   </div>
 
   <!-- SOFTWARE ACTIVATION -->
@@ -1375,8 +1375,8 @@ function subscribe() {
 
 
 function showCat(id, btn) {
-  document.querySelectorAll('.cat-section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.cat-section').forEach(function(s){ s.classList.remove('active'); });
+  document.querySelectorAll('.cat-tab').forEach(function(b){ b.classList.remove('active'); });
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
 }
