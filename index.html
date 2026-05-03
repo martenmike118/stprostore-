@@ -182,6 +182,28 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:3.5rem 2r
 
 @media(max-width:880px){.nav-links{display:none;}.stats{grid-template-columns:repeat(2,1fr);}.ctact{grid-template-columns:1fr;}.fi{grid-template-columns:1fr 1fr;}}
 @media(max-width:500px){.stats{grid-template-columns:repeat(2,1fr);}.fi{grid-template-columns:1fr;}.macts{flex-direction:column;}}
+
+.lpage{display:none;position:fixed;inset:0;background:#0a0a0f;z-index:500;overflow-y:auto;}
+.lpage.on{display:block;}
+.lnav{position:sticky;top:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;background:rgba(10,10,15,0.97);border-bottom:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(20px);}
+.lback{background:linear-gradient(135deg,#b8902e,#f0c060);color:#0a0a0f;border:none;padding:9px 20px;border-radius:50px;font-family:Inter,sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;}
+.lwrap{max-width:820px;margin:0 auto;padding:3rem 2rem 5rem;}
+.lfoot{background:#111118;border-top:1px solid rgba(255,255,255,0.07);padding:2rem;text-align:center;font-size:.8rem;color:#8888a0;}
+.lfoot a{color:#d4a843;}
+.page-tag{font-family:'Space Mono',monospace;font-size:.7rem;color:#d4a843;text-transform:uppercase;letter-spacing:.15em;margin-bottom:.75rem;}
+.page-title{font-size:2.4rem;font-weight:900;letter-spacing:-.03em;margin-bottom:.5rem;}
+.page-date{font-size:.82rem;color:#8888a0;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,0.07);margin-bottom:2.5rem;}
+.info-box{background:#1c1c25;border:1px solid rgba(212,168,67,.2);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:2.5rem;}
+.info-box p{font-size:.9rem;line-height:1.8;color:#8888a0;}
+.info-box strong{color:#f0f0f5;}
+.lwrap h2{font-size:1.15rem;font-weight:700;color:#f0c060;margin:2.5rem 0 .85rem;padding-bottom:.6rem;border-bottom:1px solid rgba(255,255,255,0.07);}
+.lwrap h3{font-size:.98rem;font-weight:600;color:#f0f0f5;margin:1.5rem 0 .5rem;}
+.lwrap p{color:#8888a0;font-size:.93rem;margin-bottom:.9rem;}
+.lwrap ul,.lwrap ol{color:#8888a0;font-size:.93rem;margin:0 0 1rem 1.6rem;}
+.lwrap li{margin-bottom:.4rem;}
+.lwrap a{color:#d4a843;text-decoration:none;}
+.highlight{background:rgba(212,168,67,.07);border-left:3px solid #d4a843;padding:1rem 1.25rem;border-radius:0 10px 10px 0;margin:1.25rem 0;font-size:.9rem;color:#8888a0;}
+
 </style>
 </head>
 <body>
@@ -464,9 +486,9 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:3.5rem 2r
       <li><a href="#services">Tools</a></li>
     </ul></div>
     <div class="fc"><h4>Legal</h4><ul>
-      <li><a href="legal/terms.html" target="_blank">Terms &amp; Conditions</a></li>
-      <li><a href="legal/privacy.html" target="_blank">Privacy Policy</a></li>
-      <li><a href="legal/refund.html" target="_blank">Refund Policy</a></li>
+      <li><a href="#" onclick="openLegal('terms');return false;">Terms &amp; Conditions</a></li>
+      <li><a href="#" onclick="openLegal('privacy');return false;">Privacy Policy</a></li>
+      <li><a href="#" onclick="openLegal('refund');return false;">Refund Policy</a></li>
     </ul></div>
     <div class="fc"><h4>Contact</h4><ul>
       <li><a href="mailto:stprogtools@gmail.com">stprogtools@gmail.com</a></li>
@@ -727,6 +749,357 @@ function toast(msg) {
   t.classList.add("on");
   setTimeout(function() { t.classList.remove("on"); }, 3000);
 }
+
+function openLegal(page) {
+  document.getElementById("page-terms").classList.remove("on");
+  document.getElementById("page-privacy").classList.remove("on");
+  document.getElementById("page-refund").classList.remove("on");
+  document.getElementById("page-" + page).classList.add("on");
+  window.scrollTo(0,0);
+  document.body.style.overflow = "hidden";
+}
+function closeLegal() {
+  document.getElementById("page-terms").classList.remove("on");
+  document.getElementById("page-privacy").classList.remove("on");
+  document.getElementById("page-refund").classList.remove("on");
+  document.body.style.overflow = "";
+}
+
 </script>
+
+<!-- TERMS PAGE -->
+<div class="lpage" id="page-terms">
+  <div class="lnav">
+    <button class="lback" onclick="closeLegal()">← Back to Store</button>
+    <img src="" id="llogo" style="height:40px;">
+  </div>
+  <div class="lwrap"><div class="page-tag">// Legal — T&C</div>
+  <h1 class="page-title">Terms and Conditions</h1>
+  <p class="page-date">Last Updated: May 1, 2026 &nbsp;·&nbsp; Effective Date: May 1, 2026 &nbsp;·&nbsp; Company: STPROG Auto Programming Solution</p>
+  
+<div class="info-box">
+  <p><strong>Business Name:</strong> STPROG Auto Programming Solution<br>
+  <strong>Address:</strong> UAE — Dubai — Al Rigga<br>
+  <strong>Email:</strong> <a href="mailto:stprogtools@gmail.com">stprogtools@gmail.com</a><br>
+  <strong>Website:</strong> <a href="https://www.stpro.online">www.stpro.online</a><br>
+  <strong>Country of Operation:</strong> United Arab Emirates</p>
+</div>
+
+<h2>1. Introduction and Acceptance</h2>
+<p>Welcome to STPROG Auto Programming Solution ("STPROG", "we", "us", or "our"). By accessing our website at <a href="https://www.stpro.online">www.stpro.online</a> and/or purchasing any of our services, you ("Customer", "User", "you") agree to be fully bound by these Terms and Conditions. Please read them carefully before placing any order.</p>
+<p>If you do not agree to these Terms and Conditions in their entirety, you must not use our website or purchase our services.</p>
+
+<h2>2. Business Description</h2>
+<p>STPROG is a professional automotive technology company based in Dubai, UAE, providing the following digital services to workshops and automotive technicians worldwide:</p>
+<ul>
+  <li>Automotive diagnostic software subscriptions (WiTECH, Honda i-HDS, Nissan Consult IV, GM TechLine Connect, etc.)</li>
+  <li>Remote ECU and module programming support sessions</li>
+  <li>Workshop repair information systems (ALLDATA Repair, ALLDATA Collision)</li>
+  <li>PCM unlocking and flash file download services</li>
+  <li>One-time dealer-level login access for various vehicle brands</li>
+</ul>
+<p>All services provided are digital in nature and are delivered remotely via email, online portal, or direct communication.</p>
+
+<h2>3. Eligibility</h2>
+<p>To use our services, you must be at least 18 years of age and have the legal authority to enter into a binding contract. Our services are intended for professional automotive technicians and workshops. By purchasing from STPROG, you confirm that you are a professional user.</p>
+
+<h2>4. Account Registration and Orders</h2>
+<p>Orders are placed through our website and confirmed via email. When placing an order you agree to provide accurate, current, and complete information including your name, email address, and any relevant vehicle or workshop details required to deliver the service.</p>
+<p>We reserve the right to refuse or cancel any order at our discretion. In the event of cancellation by STPROG, a full refund will be issued to the original payment method.</p>
+
+<h2>5. Pricing and Payment</h2>
+<p>All prices displayed on our website are in United States Dollars (USD) and are exclusive of any applicable taxes unless stated otherwise. Payment is required in full before any service is delivered.</p>
+<p>We accept the following payment methods:</p>
+<ul>
+  <li>Credit and debit cards (Visa, Mastercard, American Express)</li>
+  <li>PayPal and other payment methods displayed at checkout</li>
+</ul>
+<p>All payments are processed through secure, PCI-DSS compliant third-party payment processors. STPROG does not store your card details.</p>
+
+<h2>6. Service Delivery</h2>
+<p>Upon successful payment confirmation, our team will deliver the purchased service within the timeframe specified for each product, typically within 24 hours. Delivery is carried out via the email address provided at checkout. You are responsible for ensuring your email address is correct and that our emails are not blocked by spam filters.</p>
+
+<div class="highlight">For time-sensitive services such as one-time login sessions or daily subscriptions, delivery is typically completed within 1–4 hours during business hours (Monday–Saturday, 9AM–7PM UAE time).</div>
+
+<h2>7. Permitted Use</h2>
+<p>All software and services are licensed for legitimate professional automotive workshop and diagnostic use only. You agree:</p>
+<ul>
+  <li>Not to share, resell, redistribute, or transfer any credentials, subscriptions, or access provided to you</li>
+  <li>Not to use any service for illegal, fraudulent, or unauthorized purposes</li>
+  <li>To comply with all end-user license agreements of the respective software manufacturers</li>
+  <li>Not to attempt to reverse-engineer, modify, or duplicate any software provided</li>
+</ul>
+<p>Violation of these terms will result in immediate termination of your access without refund and may result in legal action.</p>
+
+<h2>8. Intellectual Property</h2>
+<p>STPROG acts as an authorized reseller and access provider for third-party automotive software products. All software, trademarks, and intellectual property belong to their respective manufacturers. STPROG does not claim ownership of any third-party software.</p>
+<p>The STPROG website, logo, and original content are the intellectual property of STPROG Auto Programming Solution and may not be copied or reproduced without written permission.</p>
+
+<h2>9. Disclaimer of Warranties</h2>
+<p>While we strive to provide reliable and high-quality services, STPROG makes no warranties, express or implied, regarding the continuous availability, accuracy, or fitness for a particular purpose of the software or services provided. Software products are subject to the terms and updates of their respective manufacturers.</p>
+
+<h2>10. Limitation of Liability</h2>
+<p>To the maximum extent permitted by applicable law, STPROG shall not be liable for any indirect, incidental, consequential, or punitive damages arising out of or related to your use of our services. Our total liability for any claim shall not exceed the amount paid for the specific service giving rise to the claim.</p>
+
+<h2>11. Termination</h2>
+<p>STPROG reserves the right to terminate or suspend access to any service immediately and without notice if a customer violates these Terms and Conditions, engages in fraudulent activity, or initiates an unjustified chargeback.</p>
+
+<h2>12. Governing Law and Dispute Resolution</h2>
+<p>These Terms and Conditions are governed by and construed in accordance with the laws of the United Arab Emirates. Any disputes arising from or related to these terms shall be subject to the exclusive jurisdiction of the competent courts of Dubai, UAE.</p>
+
+<h2>13. Changes to Terms</h2>
+<p>STPROG reserves the right to update or modify these Terms and Conditions at any time. Changes become effective immediately upon posting to the website. Your continued use of our services after any changes constitutes your acceptance of the updated terms.</p>
+
+<h2>14. Contact Information</h2>
+<p>For any questions, concerns, or disputes regarding these Terms and Conditions:</p>
+<div class="info-box">
+  <p><strong>STPROG Auto Programming Solution</strong><br>
+  📍 UAE — Dubai — Al Rigga<br>
+  ✉️ <a href="mailto:stprogtools@gmail.com">stprogtools@gmail.com</a><br>
+  🌐 <a href="https://www.stpro.online">www.stpro.online</a><br>
+  🕐 Business Hours: Monday – Saturday, 9:00 AM – 7:00 PM (UAE time)</p>
+</div></div>
+  <div class="lfoot">© 2026 STPROG Auto Programming Solution · UAE, Dubai, Al Rigga · <a href="mailto:stprogtools@gmail.com">stprogtools@gmail.com</a></div>
+</div>
+
+<!-- PRIVACY PAGE -->
+<div class="lpage" id="page-privacy">
+  <div class="lnav">
+    <button class="lback" onclick="closeLegal()">← Back to Store</button>
+    <img src="" id="llogo2" style="height:40px;">
+  </div>
+  <div class="lwrap"><div class="page-tag">// Legal — Privacy</div>
+  <h1 class="page-title">Privacy Policy</h1>
+  <p class="page-date">Last Updated: May 1, 2026 &nbsp;·&nbsp; Effective Date: May 1, 2026 &nbsp;·&nbsp; Company: STPROG Auto Programming Solution</p>
+  
+<div class="info-box">
+  <p><strong>Business Name:</strong> STPROG Auto Programming Solution<br>
+  <strong>Address:</strong> UAE — Dubai — Al Rigga<br>
+  <strong>Email:</strong> <a href="mailto:stprogtools@gmail.com">stprogtools@gmail.com</a><br>
+  <strong>Website:</strong> <a href="https://www.stpro.online">www.stpro.online</a><br>
+  <strong>Data Controller:</strong> STPROG Auto Programming Solution, UAE</p>
+</div>
+
+<h2>1. Introduction</h2>
+<p>STPROG Auto Programming Solution ("STPROG", "we", "us", "our") is committed to protecting and respecting your privacy. This Privacy Policy explains what personal data we collect, how we use it, who we share it with, and what rights you have in relation to your data.</p>
+<p>By using our website at <a href="https://www.stpro.online">www.stpro.online</a> or purchasing our services, you acknowledge that you have read and understood this Privacy Policy.</p>
+
+<h2>2. Data We Collect</h2>
+<h3>2.1 Information You Provide</h3>
+<ul>
+  <li><strong>Name and email address</strong> — provided when placing an order or contacting us</li>
+  <li><strong>Order and transaction details</strong> — service purchased, amount paid, date of transaction</li>
+  <li><strong>Communications</strong> — emails, messages, or support requests you send us</li>
+  <li><strong>Workshop or business information</strong> — provided when relevant to service delivery</li>
+</ul>
+<h3>2.2 Information Collected Automatically</h3>
+<ul>
+  <li>IP address and approximate geographic location</li>
+  <li>Browser type, version, and operating system</li>
+  <li>Pages visited, time spent, and navigation patterns on our website</li>
+  <li>Referring website or source</li>
+</ul>
+<h3>2.3 Payment Information</h3>
+<p>Payment card details are collected and processed exclusively by our third-party payment processors. STPROG does not receive, store, or have access to your full card number, CVV, or banking credentials. All payment data is handled in accordance with PCI-DSS Level 1 compliance standards.</p>
+
+<h2>3. How We Use Your Data</h2>
+<p>We use your personal data for the following legitimate purposes:</p>
+<ul>
+  <li>To process, confirm, and fulfill your orders</li>
+  <li>To communicate with you regarding your order, delivery, and after-sales support</li>
+  <li>To verify your identity and prevent fraudulent transactions</li>
+  <li>To improve our website, services, and customer experience</li>
+  <li>To send service updates, important notices, or promotional communications (you may opt out at any time)</li>
+  <li>To comply with applicable legal and regulatory obligations</li>
+  <li>To resolve disputes and enforce our Terms and Conditions</li>
+</ul>
+
+<h2>4. Legal Basis for Processing</h2>
+<p>We process your personal data on the following legal bases:</p>
+<ul>
+  <li><strong>Contract performance</strong> — processing is necessary to fulfill your order</li>
+  <li><strong>Legitimate interests</strong> — to operate, improve, and secure our business</li>
+  <li><strong>Legal compliance</strong> — to meet our obligations under UAE and applicable law</li>
+  <li><strong>Consent</strong> — where you have explicitly agreed (e.g., marketing communications)</li>
+</ul>
+
+<h2>5. Sharing Your Data</h2>
+<p>We do not sell, rent, or trade your personal data to third parties for marketing purposes. We may share your data only in the following circumstances:</p>
+<ul>
+  <li><strong>Payment processors</strong> — to complete your transaction securely</li>
+  <li><strong>Software vendors</strong> — only the minimum data required to activate your subscription (e.g., email address)</li>
+  <li><strong>Legal authorities</strong> — when required by law, court order, or to protect our legal rights</li>
+  <li><strong>Business transfers</strong> — in the event of a merger, acquisition, or sale of assets</li>
+</ul>
+
+<h2>6. Data Retention</h2>
+<p>We retain your personal data for as long as necessary to fulfill the purposes for which it was collected, including:</p>
+<ul>
+  <li>Order records: retained for 5 years for accounting and legal compliance</li>
+  <li>Customer communications: retained for 2 years</li>
+  <li>Marketing opt-in records: retained until you withdraw consent</li>
+</ul>
+<p>After the relevant retention period, your data is securely deleted or anonymized.</p>
+
+<h2>7. Your Rights</h2>
+<p>You have the following rights in relation to your personal data:</p>
+<ul>
+  <li><strong>Access</strong> — request a copy of the personal data we hold about you</li>
+  <li><strong>Correction</strong> — request correction of inaccurate or incomplete data</li>
+  <li><strong>Deletion</strong> — request deletion of your personal data (subject to legal obligations)</li>
+  <li><strong>Objection</strong> — object to processing based on legitimate interests</li>
+  <li><strong>Restriction</strong> — request restriction of processing in certain circumstances</li>
+  <li><strong>Portability</strong> — receive your data in a structured, commonly used format</li>
+  <li><strong>Opt-out</strong> — unsubscribe from marketing communications at any time</li>
+</ul>
+<p>To exercise any of these rights, please contact us at <a href="mailto:stprogtools@gmail.com">stprogtools@gmail.com</a>. We will respond within 30 days.</p>
+
+<h2>8. Cookies</h2>
+<p>Our website may use cookies and similar tracking technologies to enhance your browsing experience and analyze website traffic. Types of cookies we may use:</p>
+<ul>
+  <li><strong>Essential cookies</strong> — required for the website to function properly</li>
+  <li><strong>Analytics cookies</strong> — help us understand how visitors use our site</li>
+  <li><strong>Preference cookies</strong> — remember your settings and preferences</li>
+</ul>
+<p>You can control cookie settings through your browser. Disabling certain cookies may affect website functionality.</p>
+
+<h2>9. Data Security</h2>
+<p>We implement appropriate technical and organizational security measures to protect your personal data against unauthorized access, disclosure, alteration, or destruction. These include encrypted communications (HTTPS), access controls, and secure data storage practices.</p>
+<p>However, no internet transmission is completely secure. While we take all reasonable steps to protect your data, we cannot guarantee absolute security of information transmitted to our website.</p>
+
+<h2>10. International Transfers</h2>
+<p>Your data may be processed or stored outside the UAE by our service providers (e.g., email services, payment processors). We ensure appropriate safeguards are in place for such transfers in accordance with applicable data protection laws.</p>
+
+<h2>11. Third-Party Links</h2>
+<p>Our website may contain links to third-party websites. We are not responsible for the privacy practices of those websites. We encourage you to review the privacy policies of any third-party sites you visit.</p>
+
+<h2>12. Children's Privacy</h2>
+<p>Our services are not directed at individuals under the age of 18. We do not knowingly collect personal data from minors. If we become aware that we have collected data from a minor, we will delete it promptly.</p>
+
+<h2>13. Changes to This Policy</h2>
+<p>We may update this Privacy Policy periodically. We will notify you of material changes by updating the date at the top of this page. Your continued use of our website after any changes constitutes acceptance of the updated policy.</p>
+
+<h2>14. Contact Us</h2>
+<div class="info-box">
+  <p><strong>STPROG Auto Programming Solution — Data Controller</strong><br>
+  📍 UAE — Dubai — Al Rigga<br>
+  ✉️ <a href="mailto:stprogtools@gmail.com">stprogtools@gmail.com</a><br>
+  🌐 <a href="https://www.stpro.online">www.stpro.online</a></p>
+</div></div>
+  <div class="lfoot">© 2026 STPROG Auto Programming Solution · UAE, Dubai, Al Rigga · <a href="mailto:stprogtools@gmail.com">stprogtools@gmail.com</a></div>
+</div>
+
+<!-- REFUND PAGE -->
+<div class="lpage" id="page-refund">
+  <div class="lnav">
+    <button class="lback" onclick="closeLegal()">← Back to Store</button>
+    <img src="" id="llogo3" style="height:40px;">
+  </div>
+  <div class="lwrap"><div class="page-tag">// Legal — Refunds</div>
+  <h1 class="page-title">Refund Policy</h1>
+  <p class="page-date">Last Updated: May 1, 2026 &nbsp;·&nbsp; Effective Date: May 1, 2026 &nbsp;·&nbsp; Company: STPROG Auto Programming Solution</p>
+  
+<div class="info-box">
+  <p><strong>Business Name:</strong> STPROG Auto Programming Solution<br>
+  <strong>Address:</strong> UAE — Dubai — Al Rigga<br>
+  <strong>Email:</strong> <a href="mailto:stprogtools@gmail.com">stprogtools@gmail.com</a><br>
+  <strong>Website:</strong> <a href="https://www.stpro.online">www.stpro.online</a></p>
+</div>
+
+<h2>1. Our Commitment</h2>
+<p>STPROG Auto Programming Solution is committed to delivering high-quality digital services to our customers. We understand that issues can arise, and this Refund Policy outlines the circumstances under which refunds are granted, the process for requesting a refund, and the timelines involved.</p>
+<p>Because our products are digital services delivered electronically, our refund policy reflects the nature of digital goods while remaining fair and transparent to our customers.</p>
+
+<h2>2. Refund Eligibility</h2>
+<p>You may be eligible for a full or partial refund in the following circumstances:</p>
+
+<h3>2.1 Full Refund Situations</h3>
+<ul>
+  <li><strong>Non-delivery:</strong> The service was not delivered within 48 hours of payment and no resolution was agreed upon</li>
+  <li><strong>Duplicate charge:</strong> You were charged more than once for the same order</li>
+  <li><strong>Wrong service:</strong> A different service was delivered than what you ordered</li>
+  <li><strong>Pre-activation cancellation:</strong> You request cancellation before the service or subscription has been activated</li>
+</ul>
+
+<h3>2.2 Partial Refund Situations</h3>
+<ul>
+  <li>Service was partially delivered or only partly functional due to a technical issue on our part</li>
+  <li>Annual subscription cancelled within 7 days of activation with minimal usage</li>
+</ul>
+
+<div class="highlight">
+  <strong>Important:</strong> Due to the digital nature of our services, once a subscription has been activated, credentials have been delivered, or a programming session has commenced, the service is considered delivered and consumed.
+</div>
+
+<h2>3. Non-Refundable Situations</h2>
+<p>Refunds will NOT be issued in the following cases:</p>
+<ul>
+  <li>The service or subscription has been activated and credentials or access have been delivered to you</li>
+  <li>A one-time login session, remote programming session, or daily subscription has been used or commenced</li>
+  <li>The customer changed their mind after service delivery</li>
+  <li>The customer provided incorrect vehicle, software, or compatibility information at the time of purchase</li>
+  <li>The service is incompatible with the customer's equipment and this was not disclosed or was outside STPROG's reasonable knowledge</li>
+  <li>The customer violated our Terms and Conditions (e.g., sharing credentials, unauthorized resale)</li>
+  <li>The subscription was suspended due to policy violation</li>
+  <li>More than 7 days have passed since the purchase date (unless non-delivery is proven)</li>
+</ul>
+
+<h2>4. How to Request a Refund</h2>
+<p>To request a refund, please follow these steps:</p>
+<ol>
+  <li>Email us at <a href="mailto:stprogtools@gmail.com">stprogtools@gmail.com</a> within <strong>7 days</strong> of your purchase date</li>
+  <li>Use the subject line: <strong>Refund Request — [Your Order / Service Name]</strong></li>
+  <li>Include the following information in your email:
+    <ul>
+      <li>Your full name and email address used for the purchase</li>
+      <li>Name of the service purchased and date of purchase</li>
+      <li>Reason for the refund request</li>
+      <li>Any supporting evidence (screenshots, error messages, etc.)</li>
+    </ul>
+  </li>
+</ol>
+<p>We will acknowledge your request within 24 hours and provide a resolution within <strong>3 business days</strong>.</p>
+
+<h2>5. Refund Processing</h2>
+<p>Once a refund is approved:</p>
+<ul>
+  <li>The refund will be returned to the original payment method used at checkout</li>
+  <li>Processing time: <strong>5–10 business days</strong> depending on your bank or payment provider</li>
+  <li>You will receive a confirmation email once the refund has been processed</li>
+</ul>
+<p>Please note that processing times may vary by financial institution and are outside of STPROG's control once the refund has been initiated.</p>
+
+<h2>6. Chargebacks and Disputes</h2>
+<p>We strongly encourage customers to contact us directly before initiating a chargeback or payment dispute with their bank or card provider. Most issues can be resolved quickly through direct communication.</p>
+<p>Initiating a chargeback for a legitimately delivered service is considered a fraudulent dispute. In such cases, STPROG reserves the right to:</p>
+<ul>
+  <li>Provide evidence of service delivery to the payment processor</li>
+  <li>Permanently suspend the customer's access to all STPROG services</li>
+  <li>Pursue recovery of funds through legal means if necessary</li>
+</ul>
+
+<h2>7. Subscription Cancellation</h2>
+<p>Annual or long-term subscriptions may be cancelled at any time, however:</p>
+<ul>
+  <li>Cancellations before activation are eligible for a full refund</li>
+  <li>Cancellations after activation are not eligible for pro-rata refunds for the unused period</li>
+  <li>Daily subscriptions are non-refundable once access has been granted</li>
+</ul>
+
+<h2>8. Service Failures by Third-Party Vendors</h2>
+<p>Some of our services depend on third-party software platforms (e.g., manufacturer servers, diagnostic platforms). In the event of extended downtime or service failure caused by a third-party vendor beyond STPROG's control, we will work with you to find an appropriate solution, which may include service extension, credit, or partial refund at our discretion.</p>
+
+<h2>9. Contact Us</h2>
+<p>For any refund-related questions or to submit a refund request:</p>
+<div class="info-box">
+  <p><strong>STPROG Auto Programming Solution</strong><br>
+  📍 UAE — Dubai — Al Rigga<br>
+  ✉️ <a href="mailto:stprogtools@gmail.com">stprogtools@gmail.com</a><br>
+  🌐 <a href="https://www.stpro.online">www.stpro.online</a><br>
+  🕐 Response time: within 24 hours (business days)</p>
+</div></div>
+  <div class="lfoot">© 2026 STPROG Auto Programming Solution · UAE, Dubai, Al Rigga · <a href="mailto:stprogtools@gmail.com">stprogtools@gmail.com</a></div>
+</div>
+
 </body>
 </html>
