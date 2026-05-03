@@ -383,7 +383,39 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:4rem 2rem
   .footer-inner{grid-template-columns:1fr;}
   .cat-tabs{width:100%;}
 }
+
+/* PRODUCT MODAL */
+.pmodal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:400;opacity:0;pointer-events:none;transition:opacity 0.3s;backdrop-filter:blur(8px);}
+.pmodal-overlay.open{opacity:1;pointer-events:all;}
+.pmodal{position:fixed;top:50%;left:50%;transform:translate(-50%,-60%);width:90%;max-width:600px;max-height:90vh;overflow-y:auto;background:#1c1c25;border:1px solid rgba(255,255,255,0.1);border-radius:24px;z-index:401;opacity:0;pointer-events:none;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);}
+.pmodal.open{opacity:1;pointer-events:all;transform:translate(-50%,-50%);}
+.pmodal-img{width:100%;height:260px;object-fit:cover;border-radius:20px 20px 0 0;background:var(--bg3);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.pmodal-img img{width:100%;height:100%;object-fit:cover;}
+.pmodal-img span{font-size:5rem;}
+.pmodal-body{padding:2rem;}
+.pmodal-cat{font-family:var(--fm);font-size:0.7rem;color:var(--gold);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.6rem;}
+.pmodal-name{font-size:1.5rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.75rem;line-height:1.2;}
+.pmodal-desc{font-size:0.9rem;color:var(--muted);line-height:1.8;margin-bottom:1.5rem;}
+.pmodal-price{font-family:var(--fm);font-size:2rem;font-weight:700;color:var(--gold2);margin-bottom:1.5rem;}
+.pmodal-price small{font-size:0.9rem;color:var(--muted);margin-left:4px;}
+.pmodal-features{display:flex;flex-direction:column;gap:0.6rem;margin-bottom:2rem;}
+.pmodal-feature{display:flex;align-items:center;gap:10px;font-size:0.875rem;color:var(--muted);}
+.pmodal-feature::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0;}
+.pmodal-actions{display:flex;gap:1rem;}
+.pmodal-add{flex:1;background:linear-gradient(135deg,var(--gold3),var(--gold2));color:#0a0a0f;border:none;padding:15px;border-radius:50px;font-family:var(--fi);font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 20px rgba(212,168,67,0.35);}
+.pmodal-add:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(212,168,67,0.5);}
+.pmodal-close{position:absolute;top:1rem;right:1rem;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.1);color:#fff;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;z-index:10;}
+.pmodal-close:hover{background:rgba(255,77,106,0.3);border-color:var(--danger);}
+
+
+.pmodal-copy{background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:15px 20px;border-radius:50px;font-family:var(--fi);font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;white-space:nowrap;display:flex;align-items:center;gap:8px;}
+.pmodal-copy:hover{border-color:var(--gold);color:var(--gold);}
+.pmodal-copy.copied{border-color:var(--gold);color:var(--gold);background:rgba(212,168,67,0.1);}
+.pmodal-share{margin-top:1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:14px;padding:1rem;display:flex;align-items:center;gap:10px;}
+.pmodal-share input{flex:1;background:transparent;border:none;color:var(--muted);font-family:var(--fm);font-size:0.72rem;outline:none;min-width:0;}
+
 </style>
+<script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
 
@@ -707,6 +739,29 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:4rem 2rem
   </div>
 </footer>
 
+
+<!-- PRODUCT MODAL -->
+<div class="pmodal-overlay" id="pmodal-overlay"></div>
+<div class="pmodal" id="pmodal">
+  <button class="pmodal-close" id="pmodal-close">✕</button>
+  <div class="pmodal-img" id="pmodal-img"></div>
+  <div class="pmodal-body">
+    <div class="pmodal-cat" id="pmodal-cat"></div>
+    <div class="pmodal-name" id="pmodal-name"></div>
+    <div class="pmodal-desc" id="pmodal-desc"></div>
+    <div class="pmodal-features" id="pmodal-features"></div>
+    <div class="pmodal-price" id="pmodal-price"></div>
+    <div class="pmodal-actions">
+      <button class="pmodal-add" id="pmodal-add-btn">🛒 Add to Cart</button>
+      <button class="pmodal-copy" id="pmodal-copy-btn">🔗 Copy Link</button>
+    </div>
+    <div class="pmodal-share">
+      <input type="text" id="pmodal-link-input" readonly>
+      <button class="pmodal-copy" id="pmodal-copy-btn2" style="padding:8px 14px;font-size:0.78rem;">Copy</button>
+    </div>
+  </div>
+</div>
+
 <!-- CART SIDEBAR -->
 <div class="cart-overlay" id="cart-overlay"></div>
 <div class="cart-sidebar" id="cart-sidebar">
@@ -719,14 +774,18 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:4rem 2rem
   </div>
   <div class="cart-footer" id="cart-footer" style="display:none;">
     <div class="cart-total"><span>Total</span><span id="cart-total">$0</span></div>
-    <button class="checkout-btn" id="checkout-btn">Place Order via Email →</button>
+    <button class="checkout-btn" id="checkout-btn" style="margin-bottom:0.75rem;">📧 Order via Email</button>
+    <button class="checkout-btn" id="stripe-btn" style="background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;box-shadow:0 4px 20px rgba(99,91,255,0.3);">💳 Pay by Card (Visa / Mastercard)</button>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
+var productDetails = {"Witech 17.4.27 Subscription": {"cat": "Software Activation", "price": 400, "icon": "💻", "desc": "WiTECH 17.4.27 is the official dealer-level diagnostic software for Chrysler, Dodge, Jeep and RAM vehicles. Full access to ECU diagnostics, programming and calibration.", "features": ["Full ECU diagnostics for Chrysler/Dodge/Jeep/RAM", "Module programming & flashing", "DTC reading & clearing", "Live data monitoring", "1 Year subscription"]}, "Witech 2.0 Subscription": {"cat": "Software Activation", "price": 1000, "icon": "💻", "desc": "MOPAR wiTECH 2.0 is the latest generation dealer diagnostic platform. Supports all FCA vehicles with advanced programming and module configuration capabilities.", "features": ["Latest FCA dealer-level platform", "Advanced ECU & module programming", "Full vehicle system scan", "Online reprogramming support", "1 Year subscription"]}, "Techline Connect Daily": {"cat": "Software Activation", "price": 50, "icon": "💻", "desc": "GM TechLine Connect is the official General Motors diagnostic and programming software. Daily access for professional workshops needing ECU reprogramming.", "features": ["Official GM diagnostic software", "ECU & module programming", "Daily access subscription", "Supports all GM brands", "No long-term commitment"]}, "Honda i-HDS Subscription": {"cat": "Software Activation", "price": 800, "icon": "💻", "desc": "Honda i-HDS (Intelligent Honda Diagnostic System) is the official factory diagnostic tool for all Honda and Acura vehicles. Full system diagnostics and programming.", "features": ["Official Honda factory software", "All Honda & Acura models", "Full system diagnostics", "ECU programming & calibration", "1 Year subscription"]}, "Nissan Consult IV": {"cat": "Software Activation", "price": 650, "icon": "💻", "desc": "Nissan Consult IV is the official dealer diagnostic software for Nissan and Infiniti vehicles. Provides full access to all vehicle systems and programming functions.", "features": ["Official Nissan/Infiniti software", "Full dealer-level access", "All system diagnostics", "ECU programming support", "Lifetime license"]}, "GM Programming Online Support": {"cat": "Service Programming", "price": 100, "icon": "🔧", "desc": "Remote ECU and module programming support for all GM vehicles from 2010 to 2025. Our expert technicians assist you through the entire programming process remotely.", "features": ["Covers GM vehicles 2010–2025", "Remote programming session", "Expert technician support", "All GM brands included", "Fast turnaround"]}, "FCA PCM Unlock Service": {"cat": "Service Programming", "price": 100, "icon": "🔓", "desc": "Professional PCM unlocking service for Fiat Chrysler Automobiles. Allows reprogramming of locked or security-protected PCM modules.", "features": ["All FCA vehicles supported", "PCM security bypass", "Enables full reprogramming", "Remote service", "Quick 24hr turnaround"]}, "1-Time Login Dodge/Jeep/Chrysler": {"cat": "Service Programming", "price": 200, "icon": "🚗", "desc": "Single-session dealer login access for Dodge, Jeep and Chrysler ECU programming. Get full dealer-level programming capability for one session.", "features": ["One full programming session", "Dodge, Jeep & Chrysler", "Full dealer access level", "Remote support included", "Valid for 24 hours"]}, "Ford FDRS Login": {"cat": "Service Programming", "price": 200, "icon": "🔵", "desc": "Ford Diagnostic and Repair System (FDRS) single-session login. Access Ford"s official programming platform for module updates and ECU reprogramming.", "features": ["Official Ford FDRS access", "Single session login", "Module programming & updates", "All Ford/Lincoln models", "Remote support available"]}, "Toyota GTS + ECU Key": {"cat": "Service Programming", "price": 150, "icon": "🚙", "desc": "Toyota Global Techstream (GTS) access combined with ECU key for full programming and diagnostics on all Toyota and Lexus vehicles.", "features": ["Toyota Global Techstream access", "ECU key included", "All Toyota & Lexus models", "Full diagnostics & programming", "Immobilizer & key coding"]}, "ALLDATA Repair — Wiring Diagram": {"cat": "Workshop Repair System", "price": 350, "icon": "📋", "desc": "ALLDATA Repair provides complete OEM wiring diagrams, repair procedures, technical service bulletins and diagnostic information for professional workshops.", "features": ["Full OEM wiring diagrams", "Repair procedures & TSBs", "All makes & models", "Real-time OEM updates", "Professional workshop tool"]}, "ALLDATA Collision": {"cat": "Workshop Repair System", "price": 500, "icon": "🚗", "desc": "ALLDATA Collision delivers complete collision repair data including OEM repair procedures, parts information, labor guides and structural repair specifications.", "features": ["OEM collision repair procedures", "Parts & labor information", "Structural repair specs", "All major makes & models", "Regular data updates"]}, "Remote PCM Flash by CDA": {"cat": "Workshop Repair System", "price": 300, "icon": "💾", "desc": "Remote PCM flashing service using the Chrysler Diagnostic Application (CDA). Our technicians remotely flash your PCM with the latest calibration files.", "features": ["Remote flashing service", "Chrysler Diagnostic App", "Latest calibration files", "Expert technician support", "All FCA vehicles"]}, "Flash Downloader FCA": {"cat": "Workshop Repair System", "price": 200, "icon": "⬇️", "desc": "FCA Flash File Downloader allows you to download and apply official ECU calibration files for all Fiat Chrysler Automobiles vehicles directly.", "features": ["Official FCA flash files", "Direct ECU calibration", "All FCA models supported", "Easy to use interface", "Instant download access"]}};
+
 var cart = [];
+var stripe = Stripe("pk_test_51TSxDC2NPicWHnwy1vgoZoW8RD3acNgxW6juLFEYyKhKfynnwU9SDxVf62BRPbwLzrnXmbas03QzdKINDejtdb7600KzMt2qMd");
 
 // TABS
 document.getElementById("tab-sw").addEventListener("click", function() { switchTab("tab-sw","sec-sw"); });
@@ -804,7 +863,7 @@ function closeCart() {
 document.getElementById("cart-close-btn").addEventListener("click", closeCart);
 document.getElementById("cart-overlay").addEventListener("click", closeCart);
 
-// CHECKOUT
+// EMAIL CHECKOUT
 document.getElementById("checkout-btn").addEventListener("click", function() {
   if (cart.length === 0) return;
   var subject = "New Order - STPROG Auto Programming Solution";
@@ -819,12 +878,90 @@ document.getElementById("checkout-btn").addEventListener("click", function() {
   window.location.href = "mailto:stprogtools@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
 });
 
+// STRIPE CARD PAYMENT
+document.getElementById("stripe-btn").addEventListener("click", function() {
+  if (cart.length === 0) { showToast("Your cart is empty!"); return; }
+  var total = 0;
+  var itemNames = [];
+  for (var i=0; i<cart.length; i++) {
+    total += cart[i].price;
+    itemNames.push(cart[i].name);
+  }
+  // Show payment modal
+  showPaymentModal(total, itemNames);
+});
+
+// PAYMENT MODAL
+function showPaymentModal(total, items) {
+  var existing = document.getElementById("payment-modal");
+  if (existing) existing.remove();
+
+  var modal = document.createElement("div");
+  modal.id = "payment-modal";
+  modal.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:500;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(8px);";
+  modal.innerHTML = [
+    "<div style='background:#1c1c25;border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:2.5rem;width:100%;max-width:460px;'>",
+    "<div style='display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;'>",
+    "<h3 style='font-size:1.25rem;font-weight:700;'>💳 Pay by Card</h3>",
+    "<button onclick='document.getElementById("payment-modal").remove()' style='background:rgba(255,255,255,0.08);border:none;color:#fff;width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:1rem;'>✕</button>",
+    "</div>",
+    "<div style='background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;'>",
+    "<p style='font-size:0.8rem;color:#888;margin-bottom:0.5rem;'>Order Summary</p>",
+    "<p style='font-size:0.875rem;color:#ddd;'>" + items.join(", ") + "</p>",
+    "<p style='font-family:monospace;font-size:1.4rem;font-weight:700;color:#d4a843;margin-top:0.75rem;'>Total: $" + total.toLocaleString() + "</p>",
+    "</div>",
+    "<div id='card-element' style='background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:16px;margin-bottom:1.5rem;'></div>",
+    "<div id='card-errors' style='color:#ff4d6a;font-size:0.85rem;margin-bottom:1rem;min-height:20px;'></div>",
+    "<button id='pay-now-btn' style='width:100%;background:linear-gradient(135deg,#b8902e,#f0c060);color:#0a0a0f;border:none;padding:16px;border-radius:50px;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 20px rgba(212,168,67,0.4);'>",
+    "Pay $" + total.toLocaleString() + " Now",
+    "</button>",
+    "<p style='text-align:center;font-size:0.75rem;color:#555;margin-top:1rem;'>🔒 Secured by Stripe · Visa · Mastercard · Amex</p>",
+    "</div>"
+  ].join("");
+  document.body.appendChild(modal);
+
+  // Mount Stripe card element
+  var elements = stripe.elements();
+  var cardStyle = {
+    style: {
+      base: { color: "#f0f0f5", fontFamily: "Inter, sans-serif", fontSize: "16px", "::placeholder": { color: "#555568" } },
+      invalid: { color: "#ff4d6a" }
+    }
+  };
+  var cardElement = elements.create("card", cardStyle);
+  cardElement.mount("#card-element");
+  cardElement.on("change", function(e) {
+    document.getElementById("card-errors").textContent = e.error ? e.error.message : "";
+  });
+
+  // Pay button
+  document.getElementById("pay-now-btn").addEventListener("click", function() {
+    var btn = this;
+    btn.textContent = "Processing...";
+    btn.disabled = true;
+    stripe.createToken(cardElement).then(function(result) {
+      if (result.error) {
+        document.getElementById("card-errors").textContent = result.error.message;
+        btn.textContent = "Pay $" + total.toLocaleString() + " Now";
+        btn.disabled = false;
+      } else {
+        // Token created — in production send result.token.id to your backend
+        document.getElementById("payment-modal").remove();
+        cart = [];
+        updateCart();
+        closeCart();
+        showToast("Payment successful! We will contact you shortly.");
+      }
+    });
+  });
+}
+
 // TOAST
 function showToast(msg) {
   var t = document.getElementById("toast");
   t.textContent = msg;
   t.classList.add("show");
-  setTimeout(function() { t.classList.remove("show"); }, 3000);
+  setTimeout(function() { t.classList.remove("show"); }, 3500);
 }
 
 // SUBSCRIBE
@@ -837,6 +974,97 @@ document.getElementById("sub-btn").addEventListener("click", function() {
     showToast("Please enter a valid email.");
   }
 });
+
+// PRODUCT MODAL
+function openProductModal(name, price, icon, imgSrc) {
+  // Build shareable link using hash
+  var slug = name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  var shareUrl = window.location.origin + window.location.pathname + "#product-" + slug;
+  var linkInput = document.getElementById("pmodal-link-input");
+  if (linkInput) linkInput.value = shareUrl;
+
+  // Copy link buttons
+  function doCopy() {
+    navigator.clipboard.writeText(shareUrl).then(function() {
+      var b1 = document.getElementById("pmodal-copy-btn");
+      var b2 = document.getElementById("pmodal-copy-btn2");
+      if(b1){b1.textContent="✓ Copied!";b1.classList.add("copied");}
+      if(b2){b2.textContent="✓";b2.classList.add("copied");}
+      setTimeout(function(){
+        if(b1){b1.textContent="🔗 Copy Link";b1.classList.remove("copied");}
+        if(b2){b2.textContent="Copy";b2.classList.remove("copied");}
+      }, 2000);
+    });
+  }
+  setTimeout(function(){
+    var b1=document.getElementById("pmodal-copy-btn");
+    var b2=document.getElementById("pmodal-copy-btn2");
+    if(b1) b1.onclick = doCopy;
+    if(b2) b2.onclick = doCopy;
+  }, 50);
+
+  var d = productDetails[name] || {};
+  // Image
+  var imgDiv = document.getElementById("pmodal-img");
+  if (imgSrc) {
+    imgDiv.innerHTML = "<img src='" + imgSrc + "' alt='" + name + "'>";
+  } else {
+    imgDiv.innerHTML = "<span>" + icon + "</span>";
+  }
+  document.getElementById("pmodal-cat").textContent = d.cat || "";
+  document.getElementById("pmodal-name").textContent = name;
+  document.getElementById("pmodal-desc").textContent = d.desc || "";
+  // Features
+  var feats = d.features || [];
+  var fhtml = "";
+  for (var i=0; i<feats.length; i++) {
+    fhtml += "<div class='pmodal-feature'>" + feats[i] + "</div>";
+  }
+  document.getElementById("pmodal-features").innerHTML = fhtml;
+  // Price
+  var priceStr = "$" + price.toLocaleString();
+  if (name.indexOf("Daily") > -1) priceStr += "<small>/day</small>";
+  document.getElementById("pmodal-price").innerHTML = priceStr;
+  // Add to cart button
+  var addBtn = document.getElementById("pmodal-add-btn");
+  addBtn.onclick = function() {
+    cart.push({ name: name, price: price, icon: icon });
+    updateCart();
+    showToast("Added: " + name);
+    closePModal();
+  };
+  document.getElementById("pmodal-overlay").classList.add("open");
+  document.getElementById("pmodal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closePModal() {
+  document.getElementById("pmodal-overlay").classList.remove("open");
+  document.getElementById("pmodal").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+document.getElementById("pmodal-close").addEventListener("click", closePModal);
+document.getElementById("pmodal-overlay").addEventListener("click", closePModal);
+
+var slugMap = {"Witech 17.4.27 Subscription":"witech-17","Witech 2.0 Subscription":"witech-20","Techline Connect Daily":"techline","Honda i-HDS Subscription":"honda-hds","Nissan Consult IV":"nissan-c4","GM Programming Online Support":"gm-prog","FCA PCM Unlock Service":"fca-unlock","1-Time Login Dodge/Jeep/Chrysler":"djc-login","Ford FDRS Login":"ford-fdrs","Toyota GTS + ECU Key":"toyota-gts","ALLDATA Repair — Wiring Diagram":"alldata-rep","ALLDATA Collision":"alldata-col","Remote PCM Flash by CDA":"pcm-cda","Flash Downloader FCA":"fca-flash"};
+// Make product cards clickable - open modal
+var pcards = document.querySelectorAll(".pcard");
+for (var i=0; i<pcards.length; i++) {
+  pcards[i].style.cursor = "pointer";
+  (function(card) {
+    card.addEventListener("click", function(e) {
+      if (e.target.classList.contains("add-btn")) return;
+      var name  = card.getAttribute("data-name");
+      var price = parseInt(card.getAttribute("data-price"));
+      var icon  = card.getAttribute("data-icon");
+      var img   = card.querySelector(".pcard-img img");
+      var imgSrc = img ? img.src : null;
+      openProductModal(name, price, icon, imgSrc);
+    });
+  })(pcards[i]);
+}
+
 </script>
 </body>
 </html>
